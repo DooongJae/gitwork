@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title></title>
+</head>
+<body>
+
+    <form id="id-form">
+        <label for="id">선택출력:</label>
+        <input type="text" id="id" name="id" required>
+        <input type="submit" value="Get Entry">
+    </form>
+
+    <p id="result"></p>
+
+    <script>
+        document.getElementById("id-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const id = document.getElementById("id").value;
+
+            fetch(`/api/phonebook/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        document.getElementById("result").textContent = `${data.name} - ${data.hp} (${data.memo})`;
+                    } else {
+                        document.getElementById("result").textContent = 'Entry not found';
+                    }
+                });
+        });
+    </script>
+</body>
+</html>

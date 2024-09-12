@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title></title>
+</head>
+<body>
+
+    <ul id="phonebook-list"></ul>
+
+    <script>
+        fetch("/api/phonebook")
+            .then(response => response.json())
+            .then(data => {
+                const list = document.getElementById("phonebook-list");
+                data.forEach(entry => {
+                    const li = document.createElement("li");
+                    li.textContent = `${entry.name} - ${entry.hp} (${entry.memo})`;
+                    list.appendChild(li);
+                });
+            });
+        
+    </script>
+</body>
+</html>

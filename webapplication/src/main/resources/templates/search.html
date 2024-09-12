@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title></title>
+</head>
+<body>
+
+    <form id="search-form">
+        <label for="name">검색</label>
+        <input type="text" id="name" name="name" required>
+        <input type="submit" value="Search">
+    </form>
+
+    <ul id="search-results"></ul>
+
+    <script>
+        document.getElementById("search-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const name = document.getElementById("name").value;
+
+            fetch(`/api/phonebook/search?name=${name}`)
+                .then(response => response.json())
+                .then(data => {
+                    const results = document.getElementById("search-results");
+                    results.innerHTML = ''; // Clear previous results
+                    data.forEach(entry => {
+                        const li = document.createElement("li");
+                        li.textContent = `${entry.name} - ${entry.hp} (${entry.memo})`;
+                        results.appendChild(li);
+                    });
+                });
+        });
+    </script>
+</body>
+</html>
